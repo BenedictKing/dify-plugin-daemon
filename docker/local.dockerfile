@@ -45,7 +45,7 @@ RUN apt-get update && DEBIAN_FRONTEND=noninteractive apt-get install -y \
     libffi-dev \
     fonts-noto-cjk \
     fonts-noto-cjk-extra \
-    ttf-hanazono \
+    fonts-hanazono \
     ttf-mscorefonts-installer \
     fonts-noto \
     fonts-dejavu \
@@ -56,7 +56,6 @@ RUN apt-get update && DEBIAN_FRONTEND=noninteractive apt-get install -y \
     fonts-arphic-ukai \
     fonts-arphic-uming \
     xfonts-wqy \
-    fonts-cns11643 \
     fonts-cwtex-kai \
     fonts-cwtex-ming \
     fonts-droid-fallback \
