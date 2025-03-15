@@ -49,7 +49,6 @@ RUN apt-get update && DEBIAN_FRONTEND=noninteractive apt-get install -y \
     fonts-noto \
     fonts-dejavu \
     fonts-liberation \
-    fonts-droid \
     fonts-ubuntu \
     ttf-wqy-microhei \
     ttf-wqy-zenhei \
