@@ -83,7 +83,7 @@ RUN mkdir -p /usr/share/fonts/winfonts && \
 
 # Configure fontconfig fallback fonts for better CJK support
 RUN mkdir -p /etc/fonts/conf.d && \
-    cat > /etc/fonts/conf.d/64-language-selector-prefer.conf << 'EOF'
+    cat > /etc/fonts/conf.d/64-language-selector-prefer.conf << EOF
 <?xml version="1.0"?>
 <!DOCTYPE fontconfig SYSTEM "fonts.dtd">
 <fontconfig>
