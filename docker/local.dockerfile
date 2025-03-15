@@ -55,14 +55,14 @@ RUN apt-get update && DEBIAN_FRONTEND=noninteractive apt-get install -y \
     ttf-wqy-zenhei \
     fonts-arphic-ukai \
     fonts-arphic-uming \
-    xfonts-wqy &&
-    apt-get clean &&
-    rm -rf /var/lib/apt/lists/* &&
-    update-alternatives --install /usr/bin/python3 python3 /usr/bin/python3.12 1
+    xfonts-wqy \
+    && apt-get clean \
+    && rm -rf /var/lib/apt/lists/* \
+    && update-alternatives --install /usr/bin/python3 python3 /usr/bin/python3.12 1
 
 # Install uv
-RUN mv /usr/lib/python3.12/EXTERNALLY-MANAGED /usr/lib/python3.12/EXTERNALLY-MANAGED.bk &&
-    python3 -m pip install uv
+RUN mv /usr/lib/python3.12/EXTERNALLY-MANAGED /usr/lib/python3.12/EXTERNALLY-MANAGED.bk \
+    && python3 -m pip install uv
 
 # Install dify_plugin to speedup the environment setup
 RUN uv pip install --system dify_plugin
@@ -70,12 +70,12 @@ RUN uv pip install --system dify_plugin
 # Test uv
 RUN python3 -c "from uv._find_uv import find_uv_bin;print(find_uv_bin())"
 
-# Install playwright and Chrome
-RUN uv pip install --system playwright &&
-    playwright install chrome
-
 # Install CairoSVG
 RUN uv pip install --system cairosvg
+
+# Install playwright and Chrome
+RUN uv pip install --system playwright \
+    && playwright install chrome
 
 ENV PLATFORM=$PLATFORM
 ENV GIN_MODE=release
