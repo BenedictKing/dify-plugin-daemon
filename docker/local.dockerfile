@@ -43,6 +43,9 @@ RUN apt-get update && DEBIAN_FRONTEND=noninteractive apt-get install -y \
     build-essential \
     libcairo2-dev \
     libffi-dev \
+    libjpeg8-dev \
+    libfreetype6-dev \
+    libpng12-dev \
     fonts-noto-cjk \
     fonts-noto-cjk-extra \
     fonts-hanazono \
