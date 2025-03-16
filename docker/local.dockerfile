@@ -45,7 +45,7 @@ RUN apt-get update && DEBIAN_FRONTEND=noninteractive apt-get install -y \
     libffi-dev \
     libjpeg8-dev \
     libfreetype6-dev \
-    libpng12-dev \
+    libpng-dev \
     locales \
     tzdata \
     language-pack-zh-hans \
