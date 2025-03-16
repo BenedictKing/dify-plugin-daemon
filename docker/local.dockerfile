@@ -46,6 +46,11 @@ RUN apt-get update && DEBIAN_FRONTEND=noninteractive apt-get install -y \
     libjpeg8-dev \
     libfreetype6-dev \
     libpng12-dev \
+    locales \
+    tzdata \
+    language-pack-zh-hans \
+    language-pack-ja \
+    language-pack-ko \
     fonts-noto-cjk \
     fonts-noto-cjk-extra \
     fonts-hanazono \
@@ -71,9 +76,19 @@ RUN apt-get update && DEBIAN_FRONTEND=noninteractive apt-get install -y \
     fonts-roboto \
     fonts-lato \
     fonts-freefont-ttf \
-    fonts-opensymbol \
-    && apt-get clean \
-    && rm -rf /var/lib/apt/lists/*
+    fonts-opensymbol
+
+# Configure locale and timezone
+RUN sed -i '/en_US.UTF-8/s/^# //g' /etc/locale.gen && \
+    sed -i '/zh_CN.UTF-8/s/^# //g' /etc/locale.gen && \
+    sed -i '/ja_JP.UTF-8/s/^# //g' /etc/locale.gen && \
+    sed -i '/ko_KR.UTF-8/s/^# //g' /etc/locale.gen && \
+    locale-gen && \
+    ln -fs /usr/share/zoneinfo/Asia/Shanghai /etc/localtime && \
+    dpkg-reconfigure -f noninteractive tzdata && \
+    apt-get autoremove -y && \
+    apt-get clean && \
+    rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
 # Setup Windows fonts directory for better CJK support in node-canvas
 RUN mkdir -p /usr/share/fonts/winfonts && \
@@ -106,8 +121,12 @@ RUN uv pip install --system dify_plugin
 RUN uv pip install --system playwright \
     && playwright install chrome
 
-ENV PLATFORM=$PLATFORM
-ENV GIN_MODE=release
+ENV PLATFORM=$PLATFORM \
+    GIN_MODE=release \
+    LANG="zh_CN.UTF-8" \
+    LC_ALL="zh_CN.UTF-8" \
+    LANGUAGE="zh_CN:en_US:ja_JP:ko_KR" \
+    FONTCONFIG_PATH=/etc/fonts
 
 # run the server, using sh as the entrypoint to avoid process being the root process
 # and using bash to recycle resources
