@@ -3,7 +3,11 @@ FROM golang:1.22-alpine AS builder
 ARG VERSION=unknown
 
 # copy project
-COPY . /app
+COPY cmd /app/cmd
+COPY internal /app/internal
+COPY pkg /app/pkg
+COPY go.mod /app/go.mod
+COPY go.sum /app/go.sum
 
 # set working directory
 WORKDIR /app
@@ -46,6 +50,8 @@ RUN apt-get update && DEBIAN_FRONTEND=noninteractive apt-get install -y \
     libjpeg8-dev \
     libfreetype6-dev \
     libpng-dev \
+    librsvg2-dev \
+    pkg-config \
     locales \
     tzdata \
     language-pack-zh-hans \
