@@ -39,6 +39,7 @@ ARG PLATFORM=local
 # Install python3.12, dependencies and CJK fonts
 RUN apt-get update && DEBIAN_FRONTEND=noninteractive apt-get install -y \
     curl \
+    git \
     python3.12 \
     python3.12-venv \
     python3.12-dev \
@@ -92,6 +93,13 @@ RUN sed -i '/en_US.UTF-8/s/^# //g' /etc/locale.gen && \
     locale-gen && \
     ln -fs /usr/share/zoneinfo/Asia/Shanghai /etc/localtime && \
     dpkg-reconfigure -f noninteractive tzdata
+
+# Download and install dolbydu fonts
+RUN git clone https://github.com/dolbydu/font.git /tmp/font \
+    && mkdir -p /usr/share/fonts/custom \
+    && cp /tmp/font/unicode/* /usr/share/fonts/custom/ \
+    && rm -rf /tmp/font \
+    && chmod 777 /usr/share/fonts/custom
 
 # Setup Windows fonts directory for better CJK support in node-canvas
 RUN mkdir -p /usr/share/fonts/winfonts && \
