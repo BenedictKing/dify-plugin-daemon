@@ -91,10 +91,7 @@ RUN sed -i '/en_US.UTF-8/s/^# //g' /etc/locale.gen && \
     sed -i '/ko_KR.UTF-8/s/^# //g' /etc/locale.gen && \
     locale-gen && \
     ln -fs /usr/share/zoneinfo/Asia/Shanghai /etc/localtime && \
-    dpkg-reconfigure -f noninteractive tzdata && \
-    apt-get autoremove -y && \
-    apt-get clean && \
-    rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
+    dpkg-reconfigure -f noninteractive tzdata
 
 # Setup Windows fonts directory for better CJK support in node-canvas
 RUN mkdir -p /usr/share/fonts/winfonts && \
@@ -125,7 +122,10 @@ RUN uv pip install --system dify_plugin
 
 # Install playwright and Chrome
 RUN uv pip install --system playwright \
-    && playwright install chrome
+    && playwright install chrome \
+    && apt-get autoremove -y \
+    && apt-get clean \
+    && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
 ENV PLATFORM=$PLATFORM \
     GIN_MODE=release \
