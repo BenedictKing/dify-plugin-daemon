@@ -83,7 +83,8 @@ RUN apt-get update && DEBIAN_FRONTEND=noninteractive apt-get install -y \
     fonts-roboto \
     fonts-lato \
     fonts-freefont-ttf \
-    fonts-opensymbol
+    fonts-opensymbol \
+    wkhtmltopdf
 
 # Configure locale and timezone
 RUN sed -i '/en_US.UTF-8/s/^# //g' /etc/locale.gen && \
